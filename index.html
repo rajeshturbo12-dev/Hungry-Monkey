@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUNGRY MONKEY — Irish Soul. Tropical Energy.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-forest: #050D08;
+            --botanical: #1B4D2E;
+            --gold: #D4AF37;
+            --gold-light: #E8C547;
+            --cream: #F5F1E8;
+            --glass: rgba(5, 13, 8, 0.75);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--deep-forest);
+            color: var(--cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--deep-forest);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--botanical);
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(5, 13, 8, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(27, 77, 46, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(5, 13, 8, 0.8) 0%, transparent 50%),
+                linear-gradient(180deg, #050D08 0%, #0a1f12 50%, #050D08 100%);
+            background-size: cover;
+            will-change: transform;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--cream);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.7s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--deep-forest);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--cream);
+            border: 1px solid rgba(245, 241, 232, 0.3);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--botanical);
+            border-radius: 0 50% 0 50%;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .leaf:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; width: 15px; height: 15px; }
+        .leaf:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; width: 25px; height: 25px; }
+        .leaf:nth-child(3) { top: 60%; left: 15%; animation-delay: 4s; width: 18px; height: 18px; }
+        .leaf:nth-child(4) { top: 80%; left: 70%; animation-delay: 6s; width: 22px; height: 22px; }
+        .leaf:nth-child(5) { top: 40%; left: 50%; animation-delay: 8s; width: 12px; height: 12px; }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 3rem;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--cream);
+        }
+
+        .section-header p {
+            font-size: 1rem;
+            color: rgba(245, 241, 232, 0.6);
+            max-width: 500px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1.5rem auto;
+        }
+
+        /* The Daily Crave */
+        .crave-section {
+            background: linear-gradient(180deg, var(--deep-forest) 0%, #081a0f 100%);
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .food-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            background: rgba(27, 77, 46, 0.2);
+            border: 1px solid rgba(27, 77, 46, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .food-card-image {
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 0.6s ease;
+        }
+
+        .food-card:hover .food-card-image {
+            transform: scale(1.1);
+        }
+
+        .food-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(5, 13, 8, 0.95));
+        }
+
+        .food-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--cream);
+        }
+
+        .food-card p {
+            font-size: 0.9rem;
+            color: rgba(245, 241, 232, 0.7);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .food-card .price {
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+
+        /* Inside the Jungle */
+        .gallery-section {
+            background: var(--deep-forest);
+        }
+
+        .masonry {
+            column-count: 3;
+            column-gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .masonry-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .masonry-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 13, 8, 0.3);
+            transition: background 0.3s ease;
+        }
+
+        .masonry-item:hover::after {
+            background: rgba(5, 13, 8, 0.1);
+        }
+
+        .masonry-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(5, 13, 8, 0.9));
+            z-index: 2;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .masonry-item:hover .masonry-caption {
+            transform: translateY(0);
+        }
+
+        .masonry-caption h4 {
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+
+        /* ============================================
+           THE TROOP — COMPLETELY REDESIGNED
+           ============================================ */
+        .troop-section {
+            background: linear-gradient(180deg, #081a0f 0%, var(--deep-forest) 100%);
+        }
+
+        .troop-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .troop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .troop-member {
+            background: rgba(27, 77, 46, 0.15);
+            border: 1px solid rgba(27, 77, 46, 0.4);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .troop-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .troop-member:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .troop-member:hover::before {
+            opacity: 1;
+        }
+
+        .member-photo-ring {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-photo-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            opacity: 0.3;
+            transition: all 0.4s ease;
+        }
+
+        .troop-member:hover .member-photo-ring::before {
+            inset: -8px;
+            opacity: 0.6;
+            border-width: 1px;
+        }
+
+        .member-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--botanical), var(--deep-forest));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .troop-member h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.4rem;
+            color: var(--cream);
+        }
+
+        .troop-member .role {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .troop-member .bio {
+            font-size: 0.9rem;
+            color: rgba(245, 241, 232, 0.7);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .troop-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.5rem auto;
+            opacity: 0.4;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: var(--deep-forest);
+            border-top: 1px solid rgba(27, 77, 46, 0.3);
+            border-bottom: 1px solid rgba(27, 77, 46, 0.3);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .info-item {
+            padding: 2rem;
+        }
+
+        .info-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .info-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--cream);
+        }
+
+        .info-item p {
+            font-size: 0.9rem;
+            color: rgba(245, 241, 232, 0.7);
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Chalkboard Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 13, 8, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 3px solid #333;
+            border-radius: 8px;
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.5),
+                inset 0 0 100px rgba(0,0,0,0.5);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--gold);
+        }
+
+        .chalkboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--cream);
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(245, 241, 232, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .menu-category {
+            margin-bottom: 2rem;
+        }
+
+        .menu-category h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(245, 241, 232, 0.1);
+        }
+
+        .menu-item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--cream);
+        }
+
+        .menu-item-desc {
+            font-size: 0.8rem;
+            color: rgba(245, 241, 232, 0.5);
+            margin-top: 0.2rem;
+        }
+
+        .menu-item-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #020503;
+            padding: 4rem 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            color: rgba(245, 241, 232, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(245, 241, 232, 0.6);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-note {
+            font-size: 0.8rem;
+            color: rgba(245, 241, 232, 0.3);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(27, 77, 46, 0.3);
+        }
+
+        /* Mobile Sticky Buttons */
+        .mobile-sticky {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 13, 8, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
+            z-index: 999;
+            gap: 1rem;
+            border-top: 1px solid rgba(27, 77, 46, 0.3);
+        }
+
+        .mobile-sticky .btn {
+            flex: 1;
+            padding: 0.875rem;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(10px, -20px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-5px, -40px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(15px, -20px) rotate(3deg);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .troop-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .masonry {
+                column-count: 2;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 2rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .mobile-sticky {
+                display: flex;
+            }
+
+            body {
+                padding-bottom: 80px;
+            }
+
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .troop-member {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .masonry {
+                column-count: 1;
+            }
+
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .parallax-layer {
+            will-change: transform;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">Hungry Monkey</div>
+        <ul class="nav-links">
+            <li><a href="#crave">The Daily Crave</a></li>
+            <li><a href="#jungle">Inside the Jungle</a></li>
+            <li><a href="#troop">The Troop</a></li>
+            <li><a href="#" onclick="openModal()">View Menu</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="openModal()">☰</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg parallax-layer" id="heroBg"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        
+        <div class="hero-content">
+            <p class="hero-subtitle">Mulhuddart, Dublin 15</p>
+            <h1>Irish Soul. <em>Tropical Energy.</em></h1>
+            <p class="hero-desc">
+                A proper Irish brunch, reimagined. We take the best of local produce—free-range eggs from Wicklow, 
+                sourdough from Dublin bakers, black pudding from Cork—and serve it in a space that feels alive. 
+                No city-center chaos. Just great food, great coffee, and room to breathe.
+            </p>
+            <div class="hero-cta">
+                <a href="#" class="btn btn-primary" onclick="openModal()">View Menu</a>
+                <a href="#info" class="btn btn-outline">Find Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Daily Crave -->
+    <section class="crave-section" id="crave">
+        <div class="section-header reveal">
+            <h2>The Daily Crave</h2>
+            <div class="gold-line"></div>
+            <p>Irish produce, cooked with honesty. Every dish starts within 50km of your plate.</p>
+        </div>
+        
+        <div class="food-grid">
+            <div class="food-card reveal">
+                <div class="food-card-image" style="background-image: url('https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=800&q=80');">
+                    <div class="food-card-overlay">
+                        <h3>Botanical Eggs</h3>
+                        <p>Free-range Irish eggs with wild garlic, foraged herbs, and sourdough from Arbutus Bakery. Served on a bed of fresh microgreens.</p>
+                        <span class="price">€14</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card reveal">
+                <div class="food-card-image" style="background-image: url('https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&q=80');">
+                    <div class="food-card-overlay">
+                        <h3>French Toast</h3>
+                        <p>Brioche soaked in cinnamon custard, caramelized banana, toasted pecans, and a drizzle of Wicklow honey.</p>
+                        <span class="price">€13</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card reveal">
+                <div class="food-card-image" style="background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80');">
+                    <div class="food-card-overlay">
+                        <h3>Nutella Stacks</h3>
+                        <p>Triple-layered buttermilk pancakes with house-made hazelnut spread, fresh strawberries, and crushed pistachios.</p>
+                        <span class="price">€12.50</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card reveal">
+                <div class="food-card-image" style="background-image: url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&q=80');">
+                    <div class="food-card-overlay">
+                        <h3>The Full Jungle</h3>
+                        <p>Our signature fry: Clonakilty black pudding, Irish bacon, roasted vine tomatoes, field mushrooms, and eggs your way.</p>
+                        <span class="price">€16</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card reveal">
+                <div class="food-card-image" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80');">
+                    <div class="food-card-overlay">
+                        <h3>Green Bowl</h3>
+                        <p>Avocado, quinoa, kale, roasted chickpeas, pickled fennel, and a tahini-lemon dressing. Vegan & vibrant.</p>
+                        <span class="price">€13.50</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card reveal">
+                <div class="food-card-image" style="background-image: url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&q=80');">
+                    <div class="food-card-overlay">
+                        <h3>Monkey Mocha</h3>
+                        <p>Single-origin Ethiopian espresso with house chocolate, steamed milk, and a crown of gold leaf.</p>
+                        <span class="price">€4.50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inside the Jungle -->
+    <section class="gallery-section" id="jungle">
+        <div class="section-header reveal">
+            <h2>Inside the Jungle</h2>
+            <div class="gold-line"></div>
+            <p>Where Dublin ends and the tropics begin. Over 100 living plants breathe life into every corner.</p>
+        </div>
+
+        <div class="masonry">
+            <div class="masonry-item reveal">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="Restaurant Interior">
+                <div class="masonry-caption">
+                    <h4>The Canopy</h4>
+                </div>
+            </div>
+            <div class="masonry-item reveal">
+                <img src="https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=600&q=80" alt="Plants">
+                <div class="masonry-caption">
+                    <h4>Living Walls</h4>
+                </div>
+            </div>
+            <div class="masonry-item reveal">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt="Coffee Bar">
+                <div class="masonry-caption">
+                    <h4>The Brew Station</h4>
+                </div>
+            </div>
+            <div class="masonry-item reveal">
+                <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600&q=80" alt="Brunch Table">
+                <div class="masonry-caption">
+                    <h4>Hidden Garden</h4>
+                </div>
+            </div>
+            <div class="masonry-item reveal">
+                <img src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=600&q=80" alt="Tropical Plants">
+                <div class="masonry-caption">
+                    <h4>Fern Gully</h4>
+                </div>
+            </div>
+            <div class="masonry-item reveal">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80" alt="Cafe Seating">
+                <div class="masonry-caption">
+                    <h4>The Perch</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Troop — REDESIGNED -->
+    <section class="troop-section" id="troop">
+        <div class="section-header reveal">
+            <h2>The Troop</h2>
+            <div class="gold-line"></div>
+            <p>Three minds, one mission. Meet the people who make the magic happen every morning.</p>
+        </div>
+
+        <div class="troop-container">
+            <div class="troop-grid">
+                <div class="troop-member reveal">
+                    <div class="member-photo-ring">
+                        <div class="member-avatar">SO</div>
+                    </div>
+                    <h3>Sarah O'Brien</h3>
+                    <span class="role">Founder & Visionary</span>
+                    <div class="troop-divider"></div>
+                    <p class="bio">
+                        Former city-center restaurateur who traded concrete for chlorophyll. Sarah built Hungry Monkey on a simple belief: the best Irish food deserves a setting that lets you breathe. She curates every detail, from the Wicklow honey on your toast to the fern hanging above your table.
+                    </p>
+                </div>
+
+                <div class="troop-member reveal">
+                    <div class="member-photo-ring">
+                        <div class="member-avatar">MH</div>
+                    </div>
+                    <h3>Mark Hennigan</h3>
+                    <span class="role">Head Chef</span>
+                    <div class="troop-divider"></div>
+                    <p class="bio">
+                        Trained at Ballymaloe, Mark brings a reverence for Irish produce and an obsession with bold, honest flavors. His kitchen mantra is simple: "Let the ingredients sing." He sources directly from Cork, Wicklow, and Dublin growers—no shortcuts, no compromises.
+                    </p>
+                </div>
+
+                <div class="troop-member reveal">
+                    <div class="member-photo-ring">
+                        <div class="member-avatar">EK</div>
+                    </div>
+                    <h3>Emer Kiely</h3>
+                    <span class="role">Botanist & Curator</span>
+                    <div class="troop-divider"></div>
+                    <p class="bio">
+                        The green thumb behind our 100+ plant collection. Emer designs our living interior as a biophilic sanctuary, where every fern and philodendron has a purpose. She ensures the space doesn't just look alive—it feels alive, humid, and constantly growing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destination Info -->
+    <section class="info-section" id="info">
+        <div class="info-grid reveal">
+            <div class="info-item">
+                <div class="info-icon">📍</div>
+                <h3>The Location</h3>
+                <p>Old Navan Road, Mulhuddart<br>Dublin 15, D15 X299<br><span class="highlight">Just off the N3</span></p>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">🚗</div>
+                <h3>Free Parking</h3>
+                <p>Ample free parking available.<br>No city-center stress.<br><span class="highlight">Your escape starts here.</span></p>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">⏰</div>
+                <h3>Opening Hours</h3>
+                <p>Mon–Fri: 8:00 AM – 4:00 PM<br>Sat: 8:00 AM – <span class="highlight">2:00 PM</span><br><span class="highlight">Sun: Closed</span></p>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">📞</div>
+                <h3>Reservations</h3>
+                <p>Walk-ins welcome.<br>For groups of 6+:<br><span class="highlight">+353 1 826 2966</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Hungry Monkey</div>
+            <p class="footer-tagline">"Irish Heart, Tropical Soul"</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+                <a href="#" onclick="openModal()">Menu</a>
+                <a href="#info">Contact</a>
+            </div>
+            <p class="footer-note">
+                © 2026 Hungry Monkey. Old Navan Road, Mulhuddart, Dublin 15.<br>
+                Designed with chlorophyll and caffeine.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="mobile-sticky">
+        <a href="tel:+35318262966" class="btn btn-outline">Call Now</a>
+        <a href="https://maps.google.com/?q=Old+Navan+Road+Mulhuddart+Dublin" target="_blank" class="btn btn-primary">Get Directions</a>
+    </div>
+
+    <!-- Chalkboard Modal -->
+    <div class="modal-overlay" id="menuModal" onclick="closeModalOutside(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            
+            <h2 class="chalkboard-title">Today's Chalkboard</h2>
+            
+            <div class="menu-category">
+                <h3>Botanical Breakfasts</h3>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">Botanical Eggs</div>
+                        <div class="menu-item-desc">Wild garlic, foraged herbs, sourdough</div>
+                    </div>
+                    <div class="menu-item-price">€14</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">The Full Jungle</div>
+                        <div class="menu-item-desc">Black pudding, bacon, tomatoes, mushrooms</div>
+                    </div>
+                    <div class="menu-item-price">€16</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">Green Bowl</div>
+                        <div class="menu-item-desc">Avocado, quinoa, kale, tahini (V)</div>
+                    </div>
+                    <div class="menu-item-price">€13.50</div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h3>Sweet Cravings</h3>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">French Toast</div>
+                        <div class="menu-item-desc">Brioche, banana, pecans, Wicklow honey</div>
+                    </div>
+                    <div class="menu-item-price">€13</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">Nutella Stacks</div>
+                        <div class="menu-item-desc">Triple pancakes, hazelnut, strawberries</div>
+                    </div>
+                    <div class="menu-item-price">€12.50</div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h3>From the Brew</h3>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">Monkey Mocha</div>
+                        <div class="menu-item-desc">Ethiopian espresso, house chocolate, gold leaf</div>
+                    </div>
+                    <div class="menu-item-price">€4.50</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">Jungle Cold Brew</div>
+                        <div class="menu-item-desc">24hr steeped, served over botanical ice</div>
+                    </div>
+                    <div class="menu-item-price">€4</div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h3>Weekend Specials</h3>
+                <div class="menu-item">
+                    <div>
+                        <div class="menu-item-name">Bloody Monkey</div>
+                        <div class="menu-item-desc">Our take on the classic, with celery salt rim</div>
+                    </div>
+                    <div class="menu-item-price">€9</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 2rem; font-size: 0.8rem; color: rgba(245,241,232,0.4); font-style: italic;">
+                All produce sourced within 50km where possible. Vegetarian & vegan options available.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        const heroBg = document.getElementById('heroBg');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            
+            reveals.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        const modal = document.getElementById('menuModal');
+        
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function closeModalOutside(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
